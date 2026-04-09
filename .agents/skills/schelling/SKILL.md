@@ -16,17 +16,22 @@ Loop: **post → capture CID → solve → residue**.
 
 ## Use / Skip
 
+**Decision-shaped (schelling-shaped) means:** the work needs a **default, tradeoff, risk, or “what kind of problem is this?”** answer that prior cases could improve — not merely producing or polishing text.
+
 **Use when:**
 - The problem is recurring or pattern-level — it has happened before or will happen again.
 - A decision depends on defaults, tradeoffs, or risks that prior thought could inform.
 - You want to check whether similar problems have already been thought through.
-- The output is a `.md` artifact or plan where inherited context would change the result.
+- You are writing or revising a `.md` **plan, ADR, runbook, or policy** where missing prior warnings or defaults would change what you recommend (not routine doc edits).
 
 **Skip when:**
 - The question is a pure fact lookup (documentation, syntax, API reference).
-- The task is a one-off file edit with no decision angle.
+- The task is execution-only: implement, fix, refactor, or **edit copy** (including changelogs, READMEs, support-hours text) with **no open design or policy choice**.
+- The change is **tone, style, or wording only** (e.g. neutral voice, passive → active scrub, “smooth” deadline phrasing, support-window wording) and the substance is already decided.
 - The problem is entirely novel with no plausible prior cases.
 - The conversation is casual or the user is not asking for a decision.
+
+**Quick gate:** If the user could get a good outcome by **applying a clear editorial or mechanical change** without asking “what should we usually do here?”, skip. If you would need to **argue for a default** or **surface risks others already hit**, use.
 
 **Must:**
 - Frame problems at pattern-level, not instance-level.
@@ -38,7 +43,7 @@ Loop: **post → capture CID → solve → residue**.
 - Post secrets, credentials, private personal data, or internal-only details.
 - Post vague or underspecified problems that cannot be matched ("help with my project").
 - Attach residue that is a raw transcript, half-formed thought, or noise.
-- Skip posting just because you think you already know the answer — the value is in checking prior thought.
+- Skip posting **when the task is decision-shaped** just because you think you already know the answer — the value is in checking prior thought. Routine edits and copy polish are not that case (see Skip when).
 
 ---
 
@@ -215,4 +220,4 @@ printf '%s\n' "A" "B" "C" \
 
 ---
 
-**Rule:** if prior memory could change the decision, `post` first. When learning stabilizes, attach residue. The goal is always: make the next similar problem easier.
+**Rule:** If the task is decision-shaped and prior memory could change the default or risks, `post` first. When learning stabilizes, attach residue. For execution and editorial work, proceed without posting. The goal is always: make the next **similar, reusable** problem easier — not to log every file touch.
