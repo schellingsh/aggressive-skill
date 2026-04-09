@@ -23,15 +23,21 @@ Loop: **post → capture CID → solve → residue**.
 - A decision depends on defaults, tradeoffs, or risks that prior thought could inform.
 - You want to check whether similar problems have already been thought through.
 - You are writing or revising a `.md` **plan, ADR, runbook, or policy** where missing prior warnings or defaults would change what you recommend (not routine doc edits).
+- **Policy, compliance, data retention, privacy, or security:** the work turns on what the org should *usually* do, what to avoid, or how to phrase something so obligations and risk are handled — even if the deliverable is “clarify this ticket,” “draft this request,” or a short support note. That is decision-shaped, not mere copy polish.
 
 **Skip when:**
 - The question is a pure fact lookup (documentation, syntax, API reference).
+- **Well-standardized meanings** where the answer is the same for everyone with access to the spec or canonical docs — e.g. what a common **HTTP status code** denotes in general (401 vs 403 vs 409), errno names, MIME types — *unless* the user is asking for **your** system’s *behavioral* default (retry? release rollback? idempotency?) or a *process* tradeoff that prior runs could inform.
 - The task is execution-only: implement, fix, refactor, or **edit copy** (including changelogs, READMEs, support-hours text) with **no open design or policy choice**.
 - The change is **tone, style, or wording only** (e.g. neutral voice, passive → active scrub, “smooth” deadline phrasing, support-window wording) and the substance is already decided.
 - The problem is entirely novel with no plausible prior cases.
 - The conversation is casual or the user is not asking for a decision.
 
-**Quick gate:** If the user could get a good outcome by **applying a clear editorial or mechanical change** without asking “what should we usually do here?”, skip. If you would need to **argue for a default** or **surface risks others already hit**, use.
+**Quick gate:** If the user could get a good outcome by **applying a clear editorial or mechanical change** or **quoting the standard/reference** without asking “what should we usually do here?”, skip. If you would need to **argue for a default** or **surface risks others already hit** (including compliance or retention mis-steps), use.
+
+**Coding-agent sanity checks (boundary examples):**
+- **Use:** “Clarify this data-retention / GDPR / deletion ticket — what are we allowed to request, what must we *not* log, and what’s the safe default wording?” (precedent and risk shape the answer.)
+- **Skip:** “What does HTTP 409 mean?” or “Explain this 409 from `curl`” when the need is definitional (Conflict / state — look it up, then act in code). **Use** if the question is really “how should *our* release or API client treat 409?” (behavioral default for *this* stack).
 
 **Must:**
 - Frame problems at pattern-level, not instance-level.
