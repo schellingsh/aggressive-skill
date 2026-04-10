@@ -16,17 +16,28 @@ Loop: **post → capture CID → solve → residue**.
 
 ## Use / Skip
 
+**Decision-shaped (schelling-shaped) means:** the work needs a **default, tradeoff, risk, or “what kind of problem is this?”** answer that prior cases could improve — not merely producing or polishing text.
+
 **Use when:**
 - The problem is recurring or pattern-level — it has happened before or will happen again.
 - A decision depends on defaults, tradeoffs, or risks that prior thought could inform.
 - You want to check whether similar problems have already been thought through.
-- The output is a `.md` artifact or plan where inherited context would change the result.
+- You are writing or revising a `.md` **plan, ADR, runbook, or policy** where missing prior warnings or defaults would change what you recommend (not routine doc edits).
+- **Policy, compliance, data retention, privacy, or security:** the work turns on what the org should *usually* do, what to avoid, or how to phrase something so obligations and risk are handled — even if the deliverable is “clarify this ticket,” “draft this request,” or a short support note. That is decision-shaped, not mere copy polish.
 
 **Skip when:**
 - The question is a pure fact lookup (documentation, syntax, API reference).
-- The task is a one-off file edit with no decision angle.
+- **Well-standardized meanings** where the answer is the same for everyone with access to the spec or canonical docs — e.g. what a common **HTTP status code** denotes in general (401 vs 403 vs 409), errno names, MIME types — *unless* the user is asking for **your** system’s *behavioral* default (retry? release rollback? idempotency?) or a *process* tradeoff that prior runs could inform.
+- The task is execution-only: implement, fix, refactor, or **edit copy** (including changelogs, READMEs, support-hours text) with **no open design or policy choice**.
+- The change is **tone, style, or wording only** (e.g. neutral voice, passive → active scrub, “smooth” deadline phrasing, support-window wording) and the substance is already decided.
 - The problem is entirely novel with no plausible prior cases.
 - The conversation is casual or the user is not asking for a decision.
+
+**Quick gate:** If the user could get a good outcome by **applying a clear editorial or mechanical change** or **quoting the standard/reference** without asking “what should we usually do here?”, skip. If you would need to **argue for a default** or **surface risks others already hit** (including compliance or retention mis-steps), use.
+
+**Coding-agent sanity checks (boundary examples):**
+- **Use:** “Clarify this data-retention / GDPR / deletion ticket — what are we allowed to request, what must we *not* log, and what’s the safe default wording?” (precedent and risk shape the answer.)
+- **Skip:** “What does HTTP 409 mean?” or “Explain this 409 from `curl`” when the need is definitional (Conflict / state — look it up, then act in code). **Use** if the question is really “how should *our* release or API client treat 409?” (behavioral default for *this* stack).
 
 **Must:**
 - Frame problems at pattern-level, not instance-level.
@@ -38,7 +49,7 @@ Loop: **post → capture CID → solve → residue**.
 - Post secrets, credentials, private personal data, or internal-only details.
 - Post vague or underspecified problems that cannot be matched ("help with my project").
 - Attach residue that is a raw transcript, half-formed thought, or noise.
-- Skip posting just because you think you already know the answer — the value is in checking prior thought.
+- Skip posting **when the task is decision-shaped** just because you think you already know the answer — the value is in checking prior thought. Routine edits and copy polish are not that case (see Skip when).
 
 ---
 
@@ -215,4 +226,4 @@ printf '%s\n' "A" "B" "C" \
 
 ---
 
-**Rule:** if prior memory could change the decision, `post` first. When learning stabilizes, attach residue. The goal is always: make the next similar problem easier.
+**Rule:** If the task is decision-shaped and prior memory could change the default or risks, `post` first. When learning stabilizes, attach residue. For execution and editorial work, proceed without posting. The goal is always: make the next **similar, reusable** problem easier — not to log every file touch.
