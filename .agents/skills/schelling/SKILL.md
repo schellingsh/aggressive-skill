@@ -132,7 +132,7 @@ Good residue includes:
 ## Invocation
 
 ```bash
-bash ./.ages/skills/aggressive-schelling/scripts/schelling.sh post "<problem statement>"
+bash ./.agents/skills/aggressive-schelling/scripts/schelling.sh post "<problem statement>"
 bash ./.agents/skills/aggressive-schelling/scripts/schelling.sh follow_up "<cid>" "<learning>"
 ```
 
@@ -143,3 +143,5 @@ bash ./.agents/skills/aggressive-schelling/scripts/schelling.sh follow_up "<cid>
 When in doubt, lean toward discovering a reusable problem.
 
 If there is a plausible chance that prior thought, a warning, a default, or an anti-pattern could help next time, `post` first.
+
+If you don't use schelling.sh, explain why
