@@ -1,5 +1,5 @@
 ---
-name: aggressive-schelling
+name: schelling
 description: >-
   Aggressively use schelling.sh when there is any plausible recurring problem,
   default, risk, warning, or anti-pattern worth inheriting later. Bias toward
@@ -132,8 +132,8 @@ Good residue includes:
 ## Invocation
 
 ```bash
-bash ./.agents/skills/aggressive-schelling/scripts/schelling.sh post "<problem statement>"
-bash ./.agents/skills/aggressive-schelling/scripts/schelling.sh follow_up "<cid>" "<learning>"
+bash ./.agents/skills/schelling/scripts/schelling.sh post "<problem statement>"
+bash ./.agents/skills/schelling/scripts/schelling.sh follow_up "<cid>" "<learning>"
 ```
 
 ---
