@@ -22,13 +22,14 @@ Loop: **post → capture CID → solve → residue**.
 - The problem is recurring or pattern-level — it has happened before or will happen again.
 - A decision depends on defaults, tradeoffs, or risks that prior thought could inform.
 - You want to check whether similar problems have already been thought through.
-- You are writing or revising a `.md` **plan, ADR, runbook, or policy** where missing prior warnings or defaults would change what you recommend (not routine doc edits).
+- You are writing or revising a `.md` **plan, ADR, runbook, or policy** where missing prior warnings or defaults would change what you recommend — not routine doc edits, README example fixes, or changelogs.
 - **Policy, compliance, data retention, privacy, or security:** the work turns on what the org should *usually* do, what to avoid, or how to phrase something so obligations and risk are handled — even if the deliverable is “clarify this ticket,” “draft this request,” or a short support note. That is decision-shaped, not mere copy polish.
 
 **Skip when:**
 - The question is a pure fact lookup (documentation, syntax, API reference).
 - **Well-standardized meanings** where the answer is the same for everyone with access to the spec or canonical docs — e.g. what a common **HTTP status code** denotes in general (401 vs 403 vs 409), errno names, MIME types — *unless* the user is asking for **your** system’s *behavioral* default (retry? release rollback? idempotency?) or a *process* tradeoff that prior runs could inform.
 - The task is execution-only: implement, fix, refactor, or **edit copy** (including changelogs, READMEs, support-hours text) with **no open design or policy choice**.
+- **Docs vs reality:** wrong flag, typo, or stale snippet in a **README / example / copy-paste block** when the work is “make the doc match the real CLI or API” — verify against code or canonical usage and patch. That stays in the **execution / maintenance** lane schelling sits above; it is not a reusable **default/tradeoff** problem unless the ask is a standing rule (how we maintain examples, deprecation policy in docs, or error-handling defaults for the tool).
 - The change is **tone, style, or wording only** (e.g. neutral voice, passive → active scrub, “smooth” deadline phrasing, support-window wording) and the substance is already decided.
 - The problem is entirely novel with no plausible prior cases.
 - The conversation is casual or the user is not asking for a decision.
@@ -38,6 +39,8 @@ Loop: **post → capture CID → solve → residue**.
 **Coding-agent sanity checks (boundary examples):**
 - **Use:** “Clarify this data-retention / GDPR / deletion ticket — what are we allowed to request, what must we *not* log, and what’s the safe default wording?” (precedent and risk shape the answer.)
 - **Skip:** “What does HTTP 409 mean?” or “Explain this 409 from `curl`” when the need is definitional (Conflict / state — look it up, then act in code). **Use** if the question is really “how should *our* release or API client treat 409?” (behavioral default for *this* stack).
+- **Skip:** “README CLI example has wrong subcommand / typo / stale flags — fix the docs to match the implementation.” (Same as correcting any wrong string; no `post`.)
+- **Use (contrast):** “How should this CLI behave on invalid flags — exit code, stderr shape, and whether to suggest `--help`?” (Recurring **design** defaults and risks; prior cases help.)
 
 **Must:**
 - Frame problems at pattern-level, not instance-level.
