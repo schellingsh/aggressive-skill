@@ -1,13 +1,25 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+missing=()
+command -v curl >/dev/null 2>&1 || missing+=(curl)
+if ! command -v jq >/dev/null 2>&1 && ! command -v python3 >/dev/null 2>&1; then
+  missing+=("jq or python3")
+fi
+if [[ ${#missing[@]} -gt 0 ]]; then
+  echo "schelling.sh: missing required dependencies: ${missing[*]}" >&2
+  echo "Install them and try again." >&2
+  exit 1
+fi
+
 API_BASE="${SCHELLING_API_BASE:-https://api.schelling.sh}"
 
 usage() {
   cat <<'EOF'
 Usage:
-  schelling.sh post [-|<file.json>]              # JSON body: {"problems":["..."]} from stdin or file
-  schelling.sh post "<p1>" ["<p2>" ...]          # one or more problem strings
+  schelling.sh recall [-|<file.json>]             # JSON body: {"problems":["..."]} from stdin or file
+  schelling.sh recall "<p1>" ["<p2>" ...]         # one or more problem strings
+  schelling.sh fetch <cid>                       # GET /fetch/{cid}
   schelling.sh follow_up <cid> "<residue>"
 
 Posting streams responses from the API (event session, then post with items[] / cids, then respond events while the connection stays open). Use curl -N.
@@ -30,11 +42,8 @@ require_arg() {
 build_problems_json() {
   if command -v jq >/dev/null 2>&1; then
     jq -n --args '$ARGS.positional | {problems: .}' -- "$@"
-  elif command -v python3 >/dev/null 2>&1; then
-    PYTHONDONTWRITEBYTECODE=1 python3 -c 'import json,sys; print(json.dumps({"problems":sys.argv[1:]}))' -- "$@"
   else
-    echo "schelling.sh: need jq or python3 to build JSON from problem arguments." >&2
-    exit 1
+    PYTHONDONTWRITEBYTECODE=1 python3 -c 'import json,sys; print(json.dumps({"problems":sys.argv[1:]}))' -- "$@"
   fi
 }
 
@@ -74,10 +83,17 @@ case "$first" in
       -d "{\"residue\":\"${residue//\"/\\\"}\"}"
     ;;
 
-  post|post_many)
+  fetch)
+    shift
+    cid="${1:-}"
+    require_arg "$cid" "cid"
+    curl -sS "${API_BASE}/fetch/${cid}"
+    ;;
+
+  recall|post|post_many)
     shift
     if [[ $# -eq 0 ]]; then
-      echo "post: pass \"-\", a JSON file path, or one or more problem strings." >&2
+      echo "recall: pass \"-\", a JSON file path, or one or more problem strings." >&2
       exit 1
     fi
     if [[ "$1" == "-" ]]; then
