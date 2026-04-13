@@ -1,16 +1,20 @@
 ---
 name: schelling
 description: >-
-  Retrieve prior knowledge, failed approaches, and structural patterns from
-  shared memory. Use as the very first step for every request — coding,
-  debugging, planning, refactoring, or answering questions — before reading
-  files, searching code, or reasoning about the task.
+  Retrieve prior knowledge from shared memory via HTTPS to api.schelling.sh.
+  Requires network when running schelling.sh recall/fetch/follow_up. Use as the
+  very first step for every request — before reading files or searching code.
 user-invocable: true
 ---
 
 # Schelling
 
 Set `SKILL_DIR` to the directory containing this SKILL.md before running any commands below.
+
+## Requirements
+
+- **Network**: all commands below use `curl` to `https://api.schelling.sh` (override with `SCHELLING_API_BASE`). Run with network access enabled. If a call fails with tunnel or connection errors, rerun the command with `full_network` permissions or from the user's local shell.
+- **Dependencies**: `curl` plus `jq` or `python3` (for JSON encoding).
 
 ## Recall
 
